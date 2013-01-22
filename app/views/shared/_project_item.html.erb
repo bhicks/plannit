@@ -1,0 +1,14 @@
+<li>
+  <span class='description'><strong><%= project_item.description %></strong></span>
+  <span class='timestamp'>
+    Created <%= time_ago_in_words(project_item.created_at) %> ago.
+  </span>
+  <% if project_item.created_at != project_item.updated_at %>
+    <span class='timestamp'>
+      Last updated <%= time_ago_in_words(project_item.updated_at) %> ago.
+    </span>
+  <% end %>
+  <% if project_item.deadline? %>
+    Due on <%= time_tag(project_item.deadline) %>.
+  <% end %>
+</li>

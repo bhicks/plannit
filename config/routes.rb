@@ -1,11 +1,13 @@
 Plannit::Application.routes.draw do
+  resources :projects, only: [:create, :destroy]
+
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   root :to => 'landing#index'
 
   get "landing/index"
 
-  devise_for :users
+  devise_for :users, :controllers => {:registrations => 'registrations'}
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

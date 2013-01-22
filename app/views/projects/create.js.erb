@@ -1,0 +1,29 @@
+var el = $('#new_project');
+
+<% flash.each do |key,value| %>
+  $('#messages_div').removeClass('hide').append('<%= j render partial: '/shared/message_item', :locals => { key: key, value: value } %>');
+<% end %>
+
+setTimeout(function(){
+  $('.message_item').each(function(i) {
+    <%# TODO: fading out isn't working when called below  %>
+    $(this).alert('close');
+  });
+  $('#messages_div').addClass('hide');
+}, 10000);
+
+<% if @project.errors.any? %>
+  var errors = $('<ul />');
+  
+  <% $project.errors.full_message.each do |error| %>
+    errors.append('<li><%= j error %></li>');
+  <% end %>
+
+  el.find('.errors').html(errors);
+
+<% else %>
+  $('#new_project_modal').modal('hide');
+  $('#projects_list').append('<%= j render partial: '/shared/project_item', collection: [@project] %>');
+
+  el.find('input:text').val('');
+<% end %>

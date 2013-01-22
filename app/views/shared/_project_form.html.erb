@@ -1,0 +1,21 @@
+<%= link_to 'Start a New Project', '#new_project_modal', remote: true, 'data-toggle' => 'modal', class: 'btn' %>
+
+<div id='new_project_modal' class='modal hide fade'>
+  <div class='modal-header' id='new_project_modal_label'>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h3>Enter your new project</h3>
+  </div>
+  <div class='modal-body center'>
+    <%= form_for(@project, remote: true, html: {"data-type" => :script}) do |f| %>
+      <%# TODO: add field validation %>
+      <div class='field'>
+        <%= f.label :description %>
+        <%= f.text_field :description, placeholder: 'Enter your project description' %>
+      </div>
+      <%# TODO: add deadline form fields %>
+  </div>
+  <div class='modal-footer'>
+    <%= f.submit 'Post', class: 'btn btn-large btn-primary' %>
+  </div>
+    <% end %>
+</div>

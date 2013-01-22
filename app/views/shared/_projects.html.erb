@@ -1,0 +1,11 @@
+<ul id='projects_list'>
+  <% if @project_items.any? %>
+    <%= render partial: '/shared/project_item', collection: @project_items %>
+  <% else %>
+    <li>
+      No projects, add some!
+    <li>
+<% end %>
+</ul>
+
+<%= render 'shared/project_form' %>
