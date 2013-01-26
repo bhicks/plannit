@@ -2,55 +2,45 @@ require 'spec_helper'
 
 describe User do
 
-  before(:each) do
-    @attr = {
-      :email => 'user@example.com',
-      :password => 'pleasehammerdonthurtem',
-      :password_confirmation => 'pleasehammerdonthurtem',
-    }
-  end
-
   it 'should create a new instance given a valid attribute' do
-    User.create!(@attr)
+    FactoryGirl.create(:user)
   end
 
   it 'should require an email address' do
-    user_without_email = User.create(@attr.merge(:email => ''))
+    user_without_email = FactoryGirl.build(:user, :missing_email)
     user_without_email.should_not be_valid
   end
 
   it 'should accept valid email addresses' do
-    addresses = %w[user@foo.com THE_USER@foo.bar.org first.last@foo.jp]
-    addresses.each do |a|
-      valid_user = User.create(@attr.merge(:email => a))
+    (1..3).each do |a|
+      valid_user = FactoryGirl.build(:user, "valid_email_#{a}".to_sym)
       valid_user.should be_valid
     end
   end
 
   it 'should not accept invalid addresses' do
-    addresses = %w[user@foo,com user_at_foo.org example.user@foo.]
-    addresses.each do |a|
-      invalid_user = User.create(@attr.merge(:email => a))
+    (1..3).each do |a|
+      invalid_user = FactoryGirl.build(:user, "invalid_email_#{a}".to_sym)
       invalid_user.should_not be_valid
     end
   end
 
   it 'should reject duplicate email addresses' do
-    User.create!(@attr)
-    user_with_duplicate_email = User.new(@attr)
+    FactoryGirl.create(:user, :duplicate)
+    user_with_duplicate_email = FactoryGirl.build(:user, :duplicate)
     user_with_duplicate_email.should_not be_valid
   end
 
   it 'should reject duplicate case insensitive email addresses' do
-    User.create!(@attr)
-    user_with_duplicate_email = User.new(@attr.merge(:email => 'USER@EXAMPLE.COM'))
+    FactoryGirl.create(:user, :duplicate)
+    user_with_duplicate_email = FactoryGirl.build(:user, :case_insensitive_duplicate)
     user_with_duplicate_email.should_not be_valid
   end
 
   describe 'Password' do
   
     before(:each) do
-      @user = User.new(@attr)
+      @user = FactoryGirl.build(:user)
     end
   
     it 'should have a password attribute' do
@@ -65,16 +55,16 @@ describe User do
   describe 'Password Validation' do
   
     it 'should require a password' do
-      User.new(@attr.merge(:password => '', :password_confirmation => '')).should_not be_valid
+      FactoryGirl.build(:user, :invalid_password).should_not be_valid
     end
   
     it 'should require a matching password confirmation' do
-      User.new(@attr.merge(:password_confirmation => 'invalid')).
+      FactoryGirl.build(:user, :invalid_password).
         should_not be_valid
     end
   
     it 'should reject short passwords' do
-      User.new(@attr.merge(:password => 'short', :password_confirmation => 'short')).
+      FactoryGirl.build(:user, :short_password).
         should_not be_valid
     end
   end
@@ -82,7 +72,7 @@ describe User do
   describe 'Password Encryption' do
 
     before(:each) do
-      @user = User.create!(@attr)
+      @user = FactoryGirl.create(:user)
     end
 
     it 'should have an encrypted password attribute' do
@@ -94,7 +84,7 @@ describe User do
     end
 
     it 'should encrypt the password' do
-      @user.encrypted_password != @attr[:password]
+      @user.encrypted_password != FactoryGirl.attributes_for(:user)[:password]
     end
   end
 end

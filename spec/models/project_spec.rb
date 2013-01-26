@@ -3,50 +3,31 @@ require 'date'
 
 describe Project do
 
-  def generate_user
-    @user = User.create!(@user_attr)
-  end
-
-  before(:each) do
-    @attr = {
-      :description => 'one awesoem project',
-      :deadline => DateTime.new,
-    }
-
-    @user_attr = {
-      :email => 'user@example.com',
-      :password => 'pleasehammerdonthurtem',
-      :password_confirmation => 'pleasehammerdonthurtem',
-    }
-
-    generate_user
-  end
-
   it 'should create a new instance given a valid attribute' do
-    project = @user.projects.build(@attr)
+    project = FactoryGirl.build(:project)
     project.should be_valid
   end
 
   it 'should require a description' do
-    project = Project.create(@attr.merge(:description => ''))
+    project = FactoryGirl.build(:project, :no_description)
     project.should_not be_valid
   end
 
   it 'should require a user' do
-    project = Project.create(@attr)
+    project = FactoryGirl.build(:project, :no_user)
     project.should_not be_valid
   end
 
   describe 'Deadline' do
 
     it 'should not require a deadline' do
-      project = Project.create(@attr.merge(:deadline => ''))
-      project.should_not be_valid
+      project = FactoryGirl.build(:project, :no_deadline)
+      project.should be_valid
     end
 
     it 'should require a valid date string' do
-      project = Project.create(@attr.merge(:deadline => 'notadate'))
-      project.should_not be_valid
+      project = FactoryGirl.build(:project, :bad_date)
+      project.deadline.should be_nil
     end
   end
 end

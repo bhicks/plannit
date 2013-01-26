@@ -1,9 +1,25 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
   factory :project do
-    deadline "2013-01-15 22:17:51"
-    user_id 1
-    description "MyString"
+    deadline { (DateTime.now + 7).to_time }
+    user
+    sequence :description do
+      |n| "My Description #{n}"
+    end
+
+    trait :no_description do
+      description ''
+    end
+
+    trait :no_user do
+      user nil
+    end
+
+    trait :no_deadline do
+      deadline nil
+    end
+
+    trait :bad_date do
+      deadline "notadate"
+    end
   end
 end

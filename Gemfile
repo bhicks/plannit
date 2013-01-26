@@ -23,18 +23,20 @@ end
 
 group :development, :test do
   gem 'sqlite3'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
 end
+
+# Testing gems
+group :test do
+  gem 'database_cleaner'
+end 
 
 group :production, :staging do
   gem 'pg'
 end
 
 gem 'jquery-rails', '~> 2.1.4'
-
-# Testing gems
-gem 'rspec-rails', :group => [:development, :test]
-gem 'factory_girl_rails', :group => [:development, :test]
-gem 'database_cleaner', :group => :test
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
