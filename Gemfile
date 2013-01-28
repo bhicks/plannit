@@ -25,6 +25,8 @@ group :development, :test do
   gem 'sqlite3', '~> 1.3.7'
   gem 'rspec-rails', '~> 2.12.2'
   gem 'factory_girl_rails', '~> 4.1.0'
+  gem 'capybara', '~> 1.1.2'
+  gem 'launchy', '~> 2.1.2'
 end
 
 # Testing gems

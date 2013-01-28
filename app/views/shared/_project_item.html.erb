@@ -1,5 +1,5 @@
 <li>
-  <span class='description'><strong><%= project_item.description %></strong></span>
+  <span class='description'><strong><%= link_to project_item.description, project_item %></strong></span>
   <span class='timestamp'>
     Created <%= time_ago_in_words(project_item.created_at) %> ago.
   </span>

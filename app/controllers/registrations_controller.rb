@@ -1,28 +1,13 @@
 class RegistrationsController < Devise::RegistrationsController
-  def cancel
-    super
-  end
+  before_filter :signed_in_user
+# before_filter :correct_user, [:edit, :update, :destroy]
 
-  def create
-    super
-  end
-
-  def new
-    super
-  end
-
-  def edit
-    # TODO: this might need to be used in more places, as the projects sidebar is loaded every time a user is logged in
-    @project = Project.new
-    @project_items = current_user.projects
-    super
-  end
-
-  def update
-    super
-  end
-
-  def destroy
-    super
-  end
+#  private
+#    def correct_user
+#      if params[:id] != current_user.id
+#        flash[:error] = 'Users must edit their own profiles'
+#        logger.debug "Illegal user access from user #{current_user.id} to user #{params[:id]}"
+#        redirect_to root_path
+#      end
+#    end
 end

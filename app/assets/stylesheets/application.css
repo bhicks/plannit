@@ -11,3 +11,7 @@
  *= require_self
  *= require_tree .
  */
+
+body {
+  background: url('017-Subtle-light-patterns-Vol04.png');
+}

@@ -1,13 +1,15 @@
 <p id="notice"><%= notice %></p>
 
+<% unless @project.deadline.blank? %>
 <p>
   <b>Deadline:</b>
   <%= @project.deadline %>
 </p>
+<% end %>
 
 <p>
   <b>User:</b>
-  <%= @project.user_id %>
+  <%= @project.user.email %>
 </p>
 
 <p>
@@ -16,5 +18,7 @@
 </p>
 
 
-<%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Back', projects_path %>
+<%= link_to 'Delete', @project, method: :delete,
+      confirm: 'Are you sure?' %>
+<%#= link_to 'Edit', edit_project_path(@project) %> |
+<%#= link_to 'Back', projects_path %>

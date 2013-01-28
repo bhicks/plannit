@@ -1,5 +1,5 @@
 Plannit::Application.routes.draw do
-  resources :projects, only: [:create, :destroy]
+  resources :projects, only: [:show, :create, :destroy]
   resources :tasks, only: [:create, :destroy]
 
   # You can have the root of your site routed with "root"

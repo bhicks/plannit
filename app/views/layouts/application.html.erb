@@ -30,6 +30,7 @@
   <div id='messages_div' class='hide'></div>
 
   <%= yield %>
+  <%= debug(params) if Rails.env.development? %>
 </div>
 
 </body>
