@@ -18,6 +18,10 @@ describe Project do
     project.should_not be_valid
   end
 
+  it 'should not allow creation of projects for other users' do
+
+  end
+
   describe 'Deadline' do
 
     it 'should not require a deadline' do

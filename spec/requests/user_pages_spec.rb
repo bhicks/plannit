@@ -5,14 +5,16 @@ describe 'User pages' do
   subject { page }
 
   describe 'index' do
-    before(:each) do
-      visit root_path
-    end
+    before(:each) { visit root_path }
 
     after(:all) { User.delete_all }
 
     it { should have_link('Login', href: new_user_session_path ) }
     it { should have_link('Sign Up', href: new_user_registration_path ) }
+  end
+
+  describe 'sign up' do
+    # TODO there should be a sign up page...
   end
 
   describe 'sign in' do
@@ -37,7 +39,6 @@ describe 'User pages' do
 
         describe 'password change' do
           let(:new_password) { user.password + user.password }
-          let(:original_password) { user.encrypted_password }
 
           before do
             fill_in 'user_password', with: new_password
@@ -48,9 +49,9 @@ describe 'User pages' do
           after { user.password = new_password }
 
           it 'should change the password' do
+            original_password = user.encrypted_password
             click_button 'Update'
-            user_model = User.find(user.id)
-            user_model.encrypted_password.should_not == original_password
+            user.reload.encrypted_password.should_not == original_password
           end
         end
       end
