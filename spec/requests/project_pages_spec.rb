@@ -36,5 +36,35 @@ describe 'Project pages' do
       it { should_not have_content("User: #{other_project.user.email}") }
       it { should_not have_content("Description: #{other_project.user.email}") }
     end
+
+    describe 'adding a new post' do
+      let(:new_project) { FactoryGirl.build(:project, user: project.user) }
+    
+      before do
+        sign_in project.user
+        click_link 'Start a New Project'
+      end
+    
+      it { should have_button('Post') }
+    
+      it 'should require a description' do
+# TODO: add this
+#       before { fill_in 'description', with: '' }
+      end
+    
+      it 'should save with a description' do
+        fill_in 'project_description', with: new_project.description
+        expect { click_button 'Post' }.to change(Project, :count).by(1)
+        visit root_path
+    
+        should have_link(new_project.description)
+    
+        click_link new_project.description
+    
+        should have_content("User: #{new_project.user.email}")
+        should have_content("Description: #{new_project.description}")
+        should have_link('Delete')
+      end
+    end
   end
 end
