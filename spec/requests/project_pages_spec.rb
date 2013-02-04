@@ -66,5 +66,32 @@ describe 'Project pages' do
         should have_link('Delete')
       end
     end
+
+    describe 'editing a project' do
+      before do
+        sign_in project.user
+        click_link project.description
+      end
+
+      it { should have_link('Edit') }
+
+      describe 'edit page' do
+        before { click_link('Edit') }
+
+        it { should have_field('Description') }
+        it { should have_button('Save') }
+
+        it 'should update the project when saving' do
+          original_description = project.description
+          new_description = project.description + ' but newer'
+          fill_in('Description', new_description)
+          expect { click_button('Save') }.to_not change(Project, :count)
+
+          project.reload.description.should_not == original_description
+
+          should have_link(project.description)
+        end
+      end
+    end
   end
 end
