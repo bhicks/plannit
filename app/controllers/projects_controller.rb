@@ -1,5 +1,4 @@
 class ProjectsController < ApplicationController
-  before_filter :signed_in_user
   before_filter :correct_user,  only: [:show, :delete]
   respond_to :html, :js
 
@@ -79,11 +78,13 @@ class ProjectsController < ApplicationController
 
   private
     def correct_user
-      @project = current_user.projects.find_by_id(params[:id])
+      @project = current_user ? current_user.projects.find_by_id(params[:id]) : nil
       if @project.nil?
         flash[:error] = "Only project owners can view project information."
         logger.debug 'project.nil, redirecting'
         redirect_to root_path 
+      else
+        load_projects
       end
     end
 end

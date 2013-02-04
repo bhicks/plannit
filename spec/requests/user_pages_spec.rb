@@ -14,7 +14,16 @@ describe 'User pages' do
   end
 
   describe 'sign up' do
-    # TODO there should be a sign up page...
+    before(:each) { visit root_path }
+
+    it 'should take you to the sign up page if you click the sign up button' do
+      click_link 'Sign Up'
+
+      should have_content('Sign up')
+      should have_field('user_email')
+      should have_field('user_password')
+      should have_field('user_password_confirmation')
+    end
   end
 
   describe 'sign in' do
