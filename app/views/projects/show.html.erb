@@ -1,24 +1,24 @@
 <p id="notice"><%= notice %></p>
 
-<% unless @project.deadline.blank? %>
+<% unless @show_project.deadline.blank? %>
 <p>
   <b>Deadline:</b>
-  <%= @project.deadline %>
+  <%= @show_project.deadline %>
 </p>
 <% end %>
 
 <p>
   <b>User:</b>
-  <%= @project.user.email %>
+  <%= @show_project.user.email %>
 </p>
 
 <p>
   <b>Description:</b>
-  <%= @project.description %>
+  <%= @show_project.description %>
 </p>
 
 
-<%= link_to 'Delete', @project, method: :delete,
+<%= link_to 'Delete', @show_project, class: 'btn', method: :delete,
       confirm: 'Are you sure?' %>
-<%#= link_to 'Edit', edit_project_path(@project) %> |
-<%#= link_to 'Back', projects_path %>
+<%= link_to 'Edit', edit_project_path(@show_project), class: 'btn' %>
+<%= link_to 'Back', root_path, class: 'btn' %>

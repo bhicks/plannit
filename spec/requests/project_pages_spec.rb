@@ -4,7 +4,7 @@ describe 'Project pages' do
 
   subject { page }
 
-  describe 'project landing page' do
+  describe 'landing page' do
     let(:project) { FactoryGirl.create(:project) }
 
     describe 'main page' do
@@ -21,6 +21,29 @@ describe 'Project pages' do
 
       it "should not be accessible if you're not signed in" do
         should_not have_content("User: #{project.user.email}")
+        should_not have_content("Description: #{project.description}")
+      end
+    end
+
+    describe 'edit page should not be accessible if not logged in' do
+      before do
+        visit edit_project_path(project.id)
+      end
+
+      it 'should not be accessible if not logged in' do
+        should_not have_content("Description: #{project.description}")
+      end
+    end
+
+    describe 'edit page should not be accessible if logged in as someone else' do
+      let(:user) { FactoryGirl.create(:user) }
+
+      before do
+        sign_in project.user
+        visit edit_project_path(project.id)
+      end
+
+      it 'should not be accessible if not logged in' do
         should_not have_content("Description: #{project.description}")
       end
     end
@@ -47,10 +70,8 @@ describe 'Project pages' do
     
       it { should have_button('Post') }
     
-      it 'should require a description' do
-# TODO: add this
-#       before { fill_in 'description', with: '' }
-      end
+      # this will require javascript...
+      it 'should require a description'
     
       it 'should save with a description' do
         fill_in 'project_description', with: new_project.description
@@ -64,6 +85,19 @@ describe 'Project pages' do
         should have_content("User: #{new_project.user.email}")
         should have_content("Description: #{new_project.description}")
         should have_link('Delete')
+        should have_link('Back')
+      end
+    end
+
+    describe 'showing a project' do
+      before do
+        sign_in project.user
+        click_link project.description
+      end
+
+      it 'should take you to the previous page' do
+        click_link 'Back'
+        should have_content(project.description)
       end
     end
 
@@ -73,25 +107,42 @@ describe 'Project pages' do
         click_link project.description
       end
 
-      it { should have_link('Edit') }
+      it { should have_link 'Edit' }
+      it { should have_link 'Back' }
+
+      it 'should take you to the previous page' do
+        click_link 'Back'
+        should have_content(project.description)
+      end
 
       describe 'edit page' do
+        let(:new_description) { project.description + ' but newer' }
+
         before { click_link('Edit') }
 
         it { should have_field('Description') }
-        it { should have_button('Save') }
+        it { should have_button('Update') }
 
         it 'should update the project when saving' do
           original_description = project.description
-          new_description = project.description + ' but newer'
-          fill_in('Description', new_description)
-          expect { click_button('Save') }.to_not change(Project, :count)
+          within(".span8") do
+            fill_in 'project_description', with: new_description
+          end
+          expect { click_button('Update') }.to_not change(Project, :count)
 
-          project.reload.description.should_not == original_description
+          project.reload.description.should_not eq(original_description)
 
           should have_link(project.description)
         end
+
+        it 'should not require a deadline'
       end
+    end
+
+    describe 'deleting a project' do
+      it 'should delete a project if you confirm'
+
+      it 'should not delete a project if you dont confirm'
     end
   end
 end

@@ -1,0 +1,28 @@
+$(function() {
+  // Create success event
+  $('#new_project').on('ajax:success', function() {
+    setTimeout(function(){
+      $('.message_item').each(function(i) {
+        $(this).alert('close');
+      });
+      $('#messages_div').addClass('hide');
+    }, 10000);
+
+    $('#new_project_modal').modal('hide');
+  });
+
+  // Modal close event
+  $('#new_project_modal').on('hidden', function () {
+    $('#new_project_errors').html('').hide();
+
+    $new_project_inputs = $('#new_project').find('input:text');
+
+    $new_project_inputs.val('');
+    $new_project_inputs.each(function() {
+        $('#' + $(this).attr('id') + '_label').removeClass('alert-error no-background');
+    });
+  });
+
+  // Set datepicker
+  $("#project_deadline").datepicker();
+});

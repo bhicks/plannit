@@ -13,17 +13,13 @@
 
   <div class="field">
     <%= f.label :deadline %><br />
-    <%= f.datetime_select :deadline %>
-  </div>
-  <div class="field">
-    <%= f.label :user_id %><br />
-    <%= f.number_field :user_id %>
+    <%= f.text_field :deadline %>
   </div>
   <div class="field">
     <%= f.label :description %><br />
     <%= f.text_field :description %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'Update', class: 'btn' %>
   </div>
 <% end %>

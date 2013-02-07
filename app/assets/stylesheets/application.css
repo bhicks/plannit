@@ -15,3 +15,7 @@
 body {
   background: url('017-Subtle-light-patterns-Vol04.png');
 }
+
+.alert-error.no-background {
+  background-color: #FFFFFF;
+}

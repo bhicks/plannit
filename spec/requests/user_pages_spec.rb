@@ -55,8 +55,6 @@ describe 'User pages' do
             fill_in 'user_current_password', with: user.password
           end
 
-          after { user.password = new_password }
-
           it 'should change the password' do
             original_password = user.encrypted_password
             click_button 'Update'

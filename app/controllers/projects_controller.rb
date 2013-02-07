@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_filter :correct_user,  only: [:show, :delete]
+  before_filter :correct_user,  only: [:show, :delete, :edit, :update]
   respond_to :html, :js
 
   # GET /projects
@@ -16,7 +16,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
-    @project = Project.find(params[:id])
+    @show_project = Project.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
