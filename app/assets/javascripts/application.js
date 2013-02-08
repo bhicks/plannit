@@ -15,4 +15,3 @@
 //= require jquery-ui
 //= require_tree .
 //= require bootstrap
-//= require jquery-ui-timepicker-addon

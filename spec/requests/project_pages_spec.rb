@@ -135,7 +135,14 @@ describe 'Project pages' do
           should have_link(project.description)
         end
 
-        it 'should not require a deadline'
+        it 'should not require a deadline' do
+          fill_in 'project_description', with: project.description
+          fill_in 'project_deadline', with: ''
+          expect { click_button 'Update' }.to_not change(Project, :count)
+          project.reload.deadline.should == nil
+
+          should have_link(project.description)
+        end
       end
     end
 
