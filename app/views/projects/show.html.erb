@@ -3,7 +3,7 @@
 <% unless @show_project.deadline.blank? %>
 <p>
   <b>Deadline:</b>
-  <%= @show_project.deadline %>
+  <%= format_mdy(@show_project.deadline) %>
 </p>
 <% end %>
 

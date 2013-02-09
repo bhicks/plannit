@@ -20,46 +20,35 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @project }
-    end
-  end
-
-  # GET /projects/new
-  # GET /projects/new.json
-  def new
-    @project = Project.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @project }
+      format.json { render json: @show_project }
     end
   end
 
   # GET /projects/1/edit
   def edit
-    @project = Project.find(params[:id])
+    @edit_project = Project.find(params[:id])
   end
 
   # POST /projects
   # POST /projects.json
   def create
-    @project = current_user.projects.build(params[:project])
-    flash[:notice] = "Project #{@project.description} successfully created" if @project.save
-    respond_with(@project, layout: !request.xhr?)
+    @create_project = current_user.projects.build(params[:project])
+    flash[:notice] = "Project #{@create_project.description} successfully created" if @create_project.save
+    respond_with(@create_project, layout: !request.xhr?)
   end
 
   # PUT /projects/1
   # PUT /projects/1.json
   def update
-    @project = Project.find(params[:id])
+    @edit_project = Project.find(params[:id])
 
     respond_to do |format|
-      if @project.update_attributes(params[:project])
-        format.html { redirect_to @project, notice: 'Project was successfully updated.' }
+      if @edit_project.update_attributes(params[:project])
+        format.html { redirect_to @edit_project, notice: 'Project was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
+        format.json { render json: @edit_project.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -67,8 +56,8 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   # DELETE /projects/1.json
   def destroy
-    @project = Project.find(params[:id])
-    @project.destroy
+    project = Project.find(params[:id])
+    project.destroy
 
     respond_to do |format|
       format.html { redirect_to root_path }
@@ -78,8 +67,8 @@ class ProjectsController < ApplicationController
 
   private
     def correct_user
-      @project = current_user ? current_user.projects.find_by_id(params[:id]) : nil
-      if @project.nil?
+      project = current_user ? current_user.projects.find_by_id(params[:id]) : nil
+      if project.nil?
         flash[:error] = "Only project owners can view project information."
         logger.debug 'project.nil, redirecting'
         redirect_to root_path 

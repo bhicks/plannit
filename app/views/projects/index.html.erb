@@ -12,7 +12,7 @@
 
 <% @projects.each do |project| %>
   <tr>
-    <td><%= project.deadline %></td>
+    <td><%= format_mdy(project.deadline) %></td>
     <td><%= project.user_id %></td>
     <td><%= project.description %></td>
     <td><%= link_to 'Show', project %></td>

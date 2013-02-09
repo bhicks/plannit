@@ -1,7 +1,7 @@
-<% if @project.errors.any? %>
+<% if @create_project.errors.any? %>
   var errors = $('<ul />');
   
-  <% @project.errors.full_messages.each do |error| %>
+  <% @create_project.errors.full_messages.each do |error| %>
     var error_fields = "<%= j error %>".split(' ');
     var first_word   = error_fields[0];
 
@@ -17,5 +17,5 @@
     $('#messages_div').removeClass('hide').append('<%= j render partial: '/shared/message_item', :locals => { key: key, value: value } %>');
   <% end %>
   
-  $('#projects_list').append('<%= j render partial: '/shared/project_item', collection: [@project] %>');
+  $('#projects_list').append('<%= j render partial: '/shared/project_item', collection: [@create_project] %>');
 <% end %>

@@ -70,7 +70,6 @@ describe 'Project pages' do
     
       it { should have_button('Post') }
     
-      # this will require javascript...
       it 'should require a description'
     
       it 'should save with a description' do
@@ -142,6 +141,12 @@ describe 'Project pages' do
           project.reload.deadline.should == nil
 
           should have_link(project.description)
+        end
+
+        it 'should not populate the new form if clicked from the edit page' do
+          within("#new_project_modal") do
+            should_not have_content(project.description)
+          end
         end
       end
     end
