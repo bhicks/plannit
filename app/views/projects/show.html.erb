@@ -1,4 +1,6 @@
-<p id="notice"><%= notice %></p>
+<% flash.each do |key,value| %>
+  <%= render partial: '/shared/message_item', :locals => { key: key, value: value } %>
+<% end %>
 
 <% unless @show_project.deadline.blank? %>
 <p>
