@@ -25,4 +25,10 @@ $(function() {
 
   // Set datepicker
   $(".datepicker").datepicker();
+
+  // Close delete confirm modal if return clicked
+  $('#delete_project_confirm .secondary').click(function(event) {
+    event.preventDefault();
+    $('#delete_project_confirm').modal('hide');
+  });
 });

@@ -17,8 +17,23 @@
   <%= @show_project.description %>
 </p>
 
+<div class='modal hide fade' id='delete_project_confirm'>
+  <div class='modal-header'>
+    <button type='button' class='close' data-dismiss='modal'>&times;</button>
+    <h3>Delete Project</h3>
+  </div>
+  <div class='modal-body'>
+    <p>This action is non reversible!</p>
+    <p>Do you want to proceed?</p>
+  </div>
+  <div class='modal-footer'>
+    <p>
+      <%= link_to 'Delete', @show_project, class: 'btn danger', method: :delete %>
+      <%= link_to 'Return', '#', class: 'btn secondary' %>
+    </p>
+  </div>
+</div>
 
-<%= link_to 'Delete', @show_project, class: 'btn', method: :delete,
-      confirm: 'Are you sure?' %>
+<%= link_to 'Delete', '#delete_project_confirm', remote: true, 'data-toggle' => 'modal', class: 'btn' %>
 <%= link_to 'Edit', edit_project_path(@show_project), class: 'btn' %>
 <%= link_to 'Back', root_path, class: 'btn' %>
