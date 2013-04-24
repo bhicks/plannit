@@ -17,6 +17,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1.json
   def show
     @show_project = Project.find(params[:id])
+    @task_items = @show_project.tasks
 
     respond_to do |format|
       format.html # show.html.erb

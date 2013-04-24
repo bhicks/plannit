@@ -10,7 +10,8 @@
 </head>
 <body>
 
-<p>
+<p class='header'>
+  <span>
 <% if user_signed_in? %>
   <%= link_to 'Edit Profile', edit_user_registration_path %> |
   Logged in as <strong><%= current_user.email %></strong>
@@ -19,6 +20,7 @@
   <%= link_to 'Sign Up', new_user_registration_path %> | 
   <%= link_to "Login", new_user_session_path %>
 <% end %>
+  </span>
 </p>
 
 <% if user_signed_in? %>

@@ -1,0 +1,7 @@
+<ul id='task_list'>
+  <% if @task_items.any? %>
+    <%= render partial: '/shared/task_item', collection: @task_items %>
+  <% else %>
+    No tasks, add some!
+  <% end %>
+</ul>

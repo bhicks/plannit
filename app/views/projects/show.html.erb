@@ -36,6 +36,13 @@
   </div>
 </div>
 
-<%= link_to 'Delete', '#delete_project_confirm', remote: true, 'data-toggle' => 'modal', class: 'btn' %>
-<%= link_to 'Edit', edit_project_path(@show_project), class: 'btn' %>
-<%= link_to 'Back', root_path, class: 'btn' %>
+<div class='center'>
+  <%= link_to 'Delete', '#delete_project_confirm', remote: true, 'data-toggle' => 'modal', class: 'btn' %>
+  <%= link_to 'Edit', edit_project_path(@show_project), class: 'btn' %>
+  <%= link_to 'Back', root_path, class: 'btn' %>
+</div>
+
+<div class='center'>
+  <%= link_to 'Add a new task', '#add_task', class: 'btn' %>
+  <%= render partial: '/shared/tasks' %>
+</div>

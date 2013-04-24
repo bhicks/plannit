@@ -19,3 +19,8 @@ body {
 .alert-error.no-background {
   background-color: #FFFFFF;
 }
+
+p.header {
+  padding: 10px;
+  background-color: black;
+}
